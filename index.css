@@ -7,13 +7,13 @@ h1{
     border-bottom: 1px solid lightgray;
 }
 
-.scanner-container{
+/* .scanner-container{
     position: absolute;
     width: 420px;
     height:310px;
     border: 1px solid light gray;
     display: block;
-}
+} */
 
 #btn{
     margin: 10px auto;

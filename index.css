@@ -1,0 +1,27 @@
+#main{
+    text-align: center;
+    
+}
+
+h1{
+    border-bottom: 1px solid lightgray;
+}
+
+.scanner-container{
+    position: absolute;
+    width: 420px;
+    height:310px;
+    border: 1px solid light gray;
+    display: block;
+}
+
+#btn{
+    margin: 10px auto;
+    width: 60px;
+    height: 30px;
+}
+
+/* In order to place the tracking correctly */
+canvas.drawing, canvas.drawingBuffer {
+  display: none
+}

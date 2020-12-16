@@ -7,34 +7,14 @@ h1{
     border-bottom: 1px solid lightgray;
 }
 
-.scanner-container{
-    position: absolute;
-    width: 420px;
-    height:310px;
-    border: 1px solid light gray;
-    display: block;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-}
-
-.result{
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    margin: -180px 0 0 -240px;
-    width: 450px;
-}
 #btn{
-    margin: 10px 45%;
+    margin: 10px auto;
     width: 60px;
     height: 30px;
+    display: block;
 }
 
 /* In order to place the tracking correctly */
-canvas.drawing, canvas.drawingBuffer, video {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    margin: -180px 0 0 -240px;
+canvas.drawing, canvas.drawingBuffer{
+    display:none;
 }

@@ -13,15 +13,28 @@ h1{
     height:310px;
     border: 1px solid light gray;
     display: block;
+    position: absolute;
+    top: 20%;
+    left: 50%;
 }
 
+.result{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin: -180px 0 0 -240px;
+    width: 450px;
+}
 #btn{
-    margin: 10px auto;
+    margin: 10px 45%;
     width: 60px;
     height: 30px;
 }
 
 /* In order to place the tracking correctly */
-canvas.drawing, canvas.drawingBuffer {
-  display: none
+canvas.drawing, canvas.drawingBuffer, video {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin: -180px 0 0 -240px;
 }

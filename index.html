@@ -30,13 +30,15 @@
             function startScanner() {
                 Quagga.init({
                     inputStream : {
-                        name : "Live",
-                        type : "LiveStream",
+                        name: 'Live',
+                        type: 'LiveStream',
                         target: document.querySelector('#scanner-container'),
                         constraints: {
                             width: 450,
                             height: 300,
-                            facingMode: "user"
+                            facingMode: {
+                                exact: "environment"
+                            }
                         },
                     },
                     decoder : {

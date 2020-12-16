@@ -24,7 +24,7 @@
         <!--quagga js libarary-->
         <script src="./quagga.js"></script>
         <script>    
-            var _scannerRunning = false;
+            var scannerRunning = false;
 
             //start scanner 
             function startScanner() {
@@ -39,6 +39,7 @@
                             facingMode: {
                                 exact: "environment"
                             }
+                            // facingMode: "user"
                         },
                     },
                     decoder : {
@@ -77,7 +78,7 @@
                     console.log("Initialization finished. Ready to start");
                     Quagga.start();
 
-                    _scannerRunning = true;
+                    scannerRunning = true;
                 });
 
                 //procesing reading barcode and draw box around barcode.
@@ -117,9 +118,10 @@
             }
         //start or stop scanner
         document.getElementById("btn").addEventListener("click", function(){
-            if(_scannerRunning){
-                _scannerRunning = false;
+            if(scannerRunning ){
+                scannerRunning = false;
                 Quagga.stop();
+                document.getElementById('scanner-output').innerHTML = "";
             } else {
                 startScanner();
             }

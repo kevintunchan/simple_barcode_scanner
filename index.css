@@ -23,6 +23,12 @@ h1{
 }
 
 /* In order to place the tracking correctly */
-canvas.drawing, canvas.drawingBuffer {
-  display: none
+canvas.drawing, canvas.drawingBuffer{
+  display: inline-block;
+  position: absolute;
+  margin-left: -450px;
 } 
+
+video{
+    display: inline-block;
+}

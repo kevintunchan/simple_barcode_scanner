@@ -3,7 +3,6 @@
     <head>
         <title>Barcode Scanner Demo</title>
         <link rel="stylesheet" href="./index.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     </head>
     <body>
         <h1>Barcode Scanner</h1>
@@ -26,22 +25,6 @@
         <script src="./quagga.js"></script>
         <script>    
             var scannerRunning = false;
-            const cameraId = '#scanner-container';
-
-            const constraints = {
-                width: 450,
-                height: 450,
-                aspectRatio: {
-                    min: 1,
-                    max: 2,
-                },
-                facingMode: {
-                    exact: "environment"
-                },
-                // facingMode: "user",
-                focusMode: 'continuous'
-            }
-
 
             //start scanner 
             function startScanner() {
@@ -50,7 +33,14 @@
                         name: 'Live',
                         type: 'LiveStream',
                         target: document.querySelector('#scanner-container'),
-                        constraints,
+                        constraints: {
+                            width: 450,
+                            height: 300,
+                            facingMode: {
+                                exact: "environment"
+                            }
+                            // facingMode: "user"
+                        },
                     },
                     locator: {
                         halfSample: true,

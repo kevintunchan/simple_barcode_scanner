@@ -3,7 +3,7 @@
     <head>
         <title>Barcode Scanner Demo</title>
         <link rel="stylesheet" href="./index.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      
     </head>
     <body>
         <h1>Barcode Scanner</h1>
@@ -17,28 +17,25 @@
                 <span>The barcode number is</span>
                 <textbox id="scanner-output"></textbox>
             </div>
-           
-            
         </div>
         
-
         <!--quagga js libarary-->
-        <script src="./quagga.js"></script>
+        <script src="https://sold.dev.zumiez.com/js/barcode_scanner/quagga.js"></script>
         <script>    
             var scannerRunning = false;
 
             const constraints = {
-                width: 450,
-                height: 450,
-                aspectRatio: 450/450,
+                width: 500,
+                height: 500,
+                aspectRatio: 500/500,
                 locator: {
                     patchSize: 'medium',
                     halfSample: true,
                 },
-                facingMode: {
-                    exact: "environment"
-                },
-                // facingMode: "user",
+                // facingMode: {
+                //     exact: "environment"
+                // },
+                facingMode: "user",
                 focusMode: 'auto',
                 area: {
                     top: '25%',
@@ -52,16 +49,33 @@
             //start scanner 
             function startScanner() {
                 Quagga.init({
-                    inputStream : {
-                        name: 'Live',
-                        type: 'LiveStream',
-                        target: document.querySelector('#scanner-container'),
-                        constraints,
-                    },
+            inputStream : {
+                name: 'Live',
+                type: 'LiveStream',
+                target: document.querySelector("#scanner-container"),
+                constraints:{
+                    width: 350,
+                    height: 350,
+                    aspectRatio: 1/1,
                     locator: {
-                        halfSample: true,
-                        patchSize: "medium",
-                    },                    
+                        patchSize: 'large',
+                        halfSample: true
+                    },
+                    facingMode: {
+                        exact: "environment"
+                    },
+                    torch: true,
+                    // facingMode: "user",
+                    focusMode: "auto"|"manual",
+                    focusDistance: event.target.value,
+                    area: {
+                        top: '25%',
+                        right: '0%',
+                        left: '0%',
+                        bottom: '25%'
+                    }
+                }
+            },                   
                     decoder : {
                         readers : [
                             //barcode formats

@@ -8,6 +8,7 @@
     <body>
         <h1>Barcode Scanner</h1>
         <button id="torch">torch1</button>
+        <span id="response"></span>
         <div id="main">
             <div id="scanner-container"></div>
             
@@ -153,6 +154,7 @@
         
         const torchButton = document.querySelector("#torch");
         torchButton.addEventListener("click", function (){
+            document.getElementById('response').innerHTML = "torch click!";
             track.applyConstraints({
             advanced: [{torch: true}]
           });

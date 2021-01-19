@@ -7,6 +7,7 @@
     </head>
     <body>
         <h1>Barcode Scanner</h1>
+        <button id="torch">torch</button>
         <div id="main">
             <div id="scanner-container"></div>
             
@@ -39,33 +40,32 @@
                                 patchSize: 'large',
                                 halfSample: true
                             },
-                            facingMode: {
-                                exact: "environment"
-                            },
+                            facingMode: "environment" | "user",
+                            
                             
                             // facingMode: "user",
-                            torch: true,
                             focusMode: "auto"|"manual",
                             focusDistance: event.target.value,
+                            deviceId: "",
                             area: {
                                 top: '25%',
                                 right: '0%',
                                 left: '0%',
                                 bottom: '25%'
-                            }
+                            },
                         }
                     },                  
                     decoder : {
                         readers : [
                             //barcode formats
-                            "code_128_reader",
-                            "ean_reader",
-                            "ean_8_reader",
-                            "code_39_reader",
-                            "code_39_vin_reader",
-                            "codabar_reader",
-                            "upc_reader",
-                            "upc_e_reader",
+                            // "code_128_reader",
+                            // "ean_reader",
+                            // "ean_8_reader",
+                            // "code_39_reader",
+                            // "code_39_vin_reader",
+                            // "codabar_reader",
+                            // "upc_reader",
+                            // "upc_e_reader",
                             "i2of5_reader"
                         ],
                         debug: {
@@ -81,7 +81,7 @@
                                 showTransformedBox: true,
                                 showBB: true
                             }
-                        }
+                        }, 
                     },
                 }, function(err) {
                     if (err) {
@@ -122,11 +122,22 @@
                 //print out after detec
                 Quagga.onDetected(function(result){
                     console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
-                    if (result.codeResult.code){
-                        document.getElementById('scanner-output').innerHTML = result.codeResult.code;
-                        Quagga.stop();	
-                        setTimeout(function(){ $('scanner-container').hide() }, 1000);
-                    }
+                    var resultCollector = Quagga.ResultCollector.create({
+                        capture: true,
+                        capacity: 20,
+                        blacklist: [{
+                            code: "55867492279103", format: "i2of5_reader"
+                        }],
+                        filter: function(resultCollector) {
+                            if (result.codeResult.code){
+                                document.getElementById('scanner-output').innerHTML = result.codeResult.code;
+                                Quagga.stop();	
+                                setTimeout(function(){ $('scanner-container').hide() }, 1000);
+                            }
+                            return true;
+                        }
+                    });
+                    
                 });
             }
         //start or stop scanner
@@ -139,6 +150,17 @@
                 startScanner();
             }
         }, false);  
+        
+        document.getElementById("torch").addEventListener("click", function onCapabilitiesReady(capabilities){
+            if (capabilities.torch) {
+            track.applyConstraints({
+                advanced: [{torch: true}]
+            })
+            .catch(e => console.log(e));
+            }
+        });
+
+
         </script>
     </body>
 </html>

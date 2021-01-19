@@ -151,13 +151,11 @@
             }
         }, false);  
         
-        document.getElementById("torch").addEventListener("click", function onCapabilitiesReady(capabilities){
-            if (capabilities.torch) {
+        const torchButton = document.querySelector("#torch");
+        torchButton.addEventListener("click", function (){
             track.applyConstraints({
-                advanced: [{torch: true}]
-            })
-            .catch(e => console.log(e));
-            }
+            advanced: [{torch: true}]
+          });
         });
 
 

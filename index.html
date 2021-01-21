@@ -3,7 +3,8 @@
     <head>
         <title>Barcode Scanner Demo</title>
         <link rel="stylesheet" href="./index.css">
-      
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     </head>
     <body>
         <h1>Barcode Scanner</h1>
@@ -26,6 +27,20 @@
         <script>    
             var scannerRunning = false;
 
+            var resultCollector = Quagga.ResultCollector.create({
+                capture: true, // keep track of the image producing this result
+                capacity: 10,  // maximum number of results to store
+                blacklist: [   // list containing codes which should not be recorded
+                    {code: "3574660239843", format: "ean_13"}],
+                filter: function(codeResult) {
+                    // only store results which match this constraint
+                    // returns true/false
+                    // e.g.: return codeResult.format === "ean_13";
+                    return true;
+                }
+            });
+            
+                    
             //start scanner 
             function startScanner() {
                 Quagga.init({
@@ -90,8 +105,9 @@
                         return
                     }
                     console.log("Initialization finished. Ready to start");
+                
+                    Quagga.registerResultCollector(resultCollector);
                     Quagga.start();
-
                     scannerRunning = true;
                 });
 
@@ -120,25 +136,59 @@
                     }
                 });
 
+               
                 //print out after detec
                 Quagga.onDetected(function(result){
-                    console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
-                    var resultCollector = Quagga.ResultCollector.create({
-                        capture: true,
-                        capacity: 20,
-                        blacklist: [{
-                            code: "55867492279103", format: "i2of5_reader"
-                        }],
-                        filter: function(resultCollector) {
-                            if (result.codeResult.code){
-                                document.getElementById('scanner-output').innerHTML = result.codeResult.code;
-                                Quagga.stop();	
-                                setTimeout(function(){ $('scanner-container').hide() }, 1000);
-                            }
-                            return true;
-                        }
-                    });
+                    // console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+                  
+                    // if (result.codeResult.code){
+                    //     document.getElementById('scanner-output').innerHTML = result.codeResult.code;
+                    //     Quagga.stop();	
+                    //     setTimeout(function(){ $('scanner-container').hide() }, 1000);
+                    // }
+                    // return true;
                     
+
+                    Quagga.registerResultCollector(resultCollector);
+                    var resultList = resultCollector.getResults();
+                    console.log(resultList);
+
+                    let finalResult = {}
+                    if(resultList.length >= 10){
+                        for(let i = 0; i < resultList.length - 1; i++){
+                            console.log(resultList[i].codeResult.code);
+
+                            if(finalResult[resultList[i].codeResult.code] === undefined){
+                                finalResult[resultList[i].codeResult.code] = 1
+                            } else{
+                                finalResult[resultList[i].codeResult.code] += 1
+                            }  
+                        }
+                        console.log(finalResult);
+                        
+                        let finalSingleResult = Object.keys(finalResult).sort(function(a,b){return finalResult[b]-finalResult[a]});                
+                        console.log(finalSingleResult);
+
+                        if (finalSingleResult){
+                            console.log("Barcode detected and processed : [" + finalSingleResult + "]", result);
+                            document.getElementById('scanner-output').innerHTML = finalSingleResult;
+                            Quagga.stop();	
+                            setTimeout(function(){ $('scanner-container').hide() }, 1000);
+                        }
+                        return true;
+                    }
+
+                   
+
+                    
+                    
+                    
+
+ 
+
+
+                    return true;
+                
                 });
             }
         //start or stop scanner
@@ -152,13 +202,13 @@
             }
         }, false);  
         
-        const torchButton = document.querySelector("#torch");
-        torchButton.addEventListener("click", function (){
-            document.getElementById('response').innerHTML = "torch click!";
-            track.applyConstraints({
-            advanced: [{torch: true}]
-          });
-        });
+        // const torchButton = document.querySelector("#torch");
+        // torchButton.addEventListener("click", function (){
+        //     document.getElementById('response').innerHTML = "torch click!";
+        //     track.applyConstraints({
+        //     advanced: [{torch: true}]
+        //   });
+        // });
 
 
         </script>

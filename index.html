@@ -179,7 +179,6 @@
                             console.log("Barcode detected and processed : [" + finalSingleResult + "]", result);
                             document.getElementById('scanner-output').innerHTML = finalSingleResult;
                             Quagga.stop();	
-                            setTimeout(function(){ $('scanner-container').hide() }, 1000);
                         }
                         return true;
                     }

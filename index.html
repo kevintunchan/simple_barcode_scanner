@@ -8,6 +8,7 @@
     </head>
     <body>
         <h1>Barcode Scanner</h1>
+        <button id="torch">fdafdsa</button>
         <span id="response"></span>
         <div id="main">
             <div id="scanner-container"></div>
@@ -178,6 +179,7 @@
                             console.log("Barcode detected and processed : [" + finalSingleResult + "]", result);
                             document.getElementById('scanner-output').innerHTML = finalSingleResult;
                             Quagga.stop();	
+                            setTimeout(function(){ $('scanner-container', 'drawingBuffer').hide() }, 1000);
                         }
                         return true;
                     }

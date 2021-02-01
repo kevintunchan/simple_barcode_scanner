@@ -26,17 +26,20 @@
         <script src="./quagga.js"></script>
         <script>    
             var scannerRunning = false;
-
+            
             var resultCollector = Quagga.ResultCollector.create({
-                capture: true, // keep track of the image producing this result
-                capacity: 10,  // maximum number of results to store
-                blacklist: [   // list containing codes which should not be recorded
-                    {code: "3574660239843", format: "ean_13"}],
+                capture: true,
+                capacity: 10,
+
+                blacklist: [
+                {code: "3574660239843", format: "ean_13"}],
+
                 filter: function(codeResult) {
-                    // only store results which match this constraint
-                    // returns true/false
-                    // e.g.: return codeResult.format === "ean_13";
-                    return true;
+                    if(codeResult.code.length == 14 && codeResult.code.match(/^[0-9]+$/) ){
+                        return true;
+                    } else{
+                        return false;
+                    }
                 }
             });
             
@@ -56,8 +59,9 @@
                                 patchSize: 'large',
                                 halfSample: true
                             },
-                            facingMode: "environment" | "user",
-                            
+                            facingMode: {
+                                excet: "environment",
+                            },
                             
                             // facingMode: "user",
                             focusMode: "auto"|"manual",
@@ -166,9 +170,11 @@
                         }
                         console.log(finalResult);
                         
-                        let finalSingleResult = Object.keys(finalResult).sort(function(a,b){return finalResult[b]-finalResult[a]});                
+                        let sortedResultList = Object.keys(finalResult).sort(function(a,b){return finalResult[b]-finalResult[a]});                
+                        
+                        
+                        let finalSingleResult = sortedResultList[0];
                         console.log(finalSingleResult);
-
                         if (finalSingleResult){
                             console.log("Barcode detected and processed : [" + finalSingleResult + "]", result);
                             document.getElementById('scanner-output').innerHTML = finalSingleResult;

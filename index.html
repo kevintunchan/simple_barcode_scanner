@@ -8,10 +8,14 @@
     </head>
     <body>
         <h1>Barcode Scanner</h1>
-        <button id="torch">fdafdsa</button>
+        <button id="torch">11111</button>
         <span id="response"></span>
         <div id="main">
-            <div id="scanner-container"></div>
+            <div id="scanner-container">
+                <video class="videoCamera" autoplay="true" preload="auto" src="" muted="true"
+                playsinline="true"></video>
+                <canvas class="drawingBuffer"></canvas>
+            </div>
             
             <div class="result">
                 <button type="button" id="btn">
